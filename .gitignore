@@ -1,0 +1,5 @@
+NMT/tools
+NMT/data/*
+!test/
+
+.venv
