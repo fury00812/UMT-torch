@@ -22,9 +22,11 @@ if __name__ == '__main__':
     assert os.path.isfile(voc_path)
     assert os.path.isfile(txt_path)
 
+    # Create a Dictionary object from voc_path
     dico = Dictionary.read_vocab(voc_path)
     logger.info("")
 
+    # Save a binarized dataset (*.pth) by torch.save()
     data = Dictionary.index_data(txt_path, bin_path, dico)
     logger.info("%i words (%i unique) in %i sentences." % (
         len(data['sentences']) - len(data['positions']),
