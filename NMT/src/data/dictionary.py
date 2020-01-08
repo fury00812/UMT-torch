@@ -23,8 +23,15 @@ SPECIAL_WORDS = 10
 
 
 class Dictionary(object):
+    """
+    Dictionary object for interchange between words and IDs.
+    """
 
     def __init__(self, id2word, word2id):
+        """
+        :param id2word: {'word': 0, ...} 
+        :param word2id: {0: 'word', ...}
+        """
         assert len(id2word) == len(word2id)
         self.id2word = id2word
         self.word2id = word2id
@@ -121,7 +128,7 @@ class Dictionary(object):
     @staticmethod
     def index_data(path, bin_path, dico):
         """
-        Index sentences with a dictionary.
+        Convert sentences into IDs and seriarize by torch.save() with a Dictionary object.
         """
         if os.path.isfile(bin_path):
             print("Loading data from %s ..." % bin_path)
@@ -129,8 +136,11 @@ class Dictionary(object):
             assert dico == data['dico']
             return data
 
-        positions = []
-        sentences = []
+        positions = []  # Positions of each sentence in 'sentences[]'
+                        # [[0,3], [4,6], ...]
+                        # len(positions) means number of sentences
+        sentences = []  # 1d array with each sentence separated by '-1'
+                        # {2, 3, 4, -1, 9, 3, -1, ...}
         unk_words = {}
 
         # index sentences
@@ -145,9 +155,9 @@ class Dictionary(object):
                 # continue
             # index sentence words
             count_unk = 0
-            indexed = []
+            indexed = []  # word IDs of a sentence [3, 4, 3, 2, 9, ...]
             for w in s:
-                word_id = dico.index(w, no_unk=False)
+                word_id = dico.index(w, no_unk=False)  # return a id of a word 'w'
                 if word_id < 4 + SPECIAL_WORDS and word_id != dico.unk_index:
                     logger.warning('Found unexpected special word "%s" (%i)!!' % (w, word_id))
                     continue
