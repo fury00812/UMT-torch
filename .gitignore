@@ -1,5 +1,8 @@
-NMT/tools
 NMT/data/*
 !test/
+NMT/tools
+NMT/dumped
 
 .venv
+
+__pycache__/
