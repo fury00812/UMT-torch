@@ -18,7 +18,8 @@ def get_parser():
     parser.add_argument("--exp_id", type=str, default="{0:%y%m%d-%H%M%S}".format(now),
                         help="Experiment ID")
     parser.add_argument("--dump_path", type=str, default="./dumped/",
-                        
+                        help="Experiment dump path")
+    parser.add_argument("--seed", type=int, default=-1,
                         help="Random generator seed (-1 for random)")
     # dataset
     parser.add_argument("--langs", type=str, default="",
