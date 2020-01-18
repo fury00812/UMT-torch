@@ -7,6 +7,7 @@ import numpy as np
 
 from src.logger import create_logger
 from src.data.loader import load_mono_data, check_all_data_params
+from src.model.build_model import build_model
 
 def get_parser():
     parser = argparse.ArgumentParser(description="UNMT training script")
@@ -17,8 +18,7 @@ def get_parser():
     parser.add_argument("--exp_id", type=str, default="{0:%y%m%d-%H%M%S}".format(now),
                         help="Experiment ID")
     parser.add_argument("--dump_path", type=str, default="./dumped/",
-                        help="Experiment dump path")
-    parser.add_argument("--seed", type=int, default=-1,
+                        
                         help="Random generator seed (-1 for random)")
     # dataset
     parser.add_argument("--langs", type=str, default="",
@@ -73,6 +73,9 @@ def main(params):
     # load data
     data = load_mono_data(params)
 
+    # build model
+    #encoder, decoder, discriminator, lm = build_model(params, data) 
+    encoder, decoder, lm = build_model(params, data)
 
 if __name__ == "__main__":
     parser = get_parser()
